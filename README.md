@@ -1,4 +1,4 @@
-# Go toolkit
+# Go toolkit [![Go Report Card](https://goreportcard.com/badge/github.com/sima-land/go-toolkit)](https://goreportcard.com/report/github.com/sima-land/go-toolkit)
 
 Set of frequently used functions:
 
