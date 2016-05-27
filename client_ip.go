@@ -15,6 +15,9 @@ func ClientIP(req *http.Request) string {
 			ip = req.RemoteAddr
 		}
 	}
+	if comma := strings.LastIndex(ip, ","); comma != -1 {
+		ip = strings.Trim(ip[comma+1:], " ")
+	}
 	if colon := strings.LastIndex(ip, ":"); colon != -1 {
 		ip = ip[:colon]
 	}
@@ -23,4 +26,3 @@ func ClientIP(req *http.Request) string {
 	}
 	return ip
 }
-

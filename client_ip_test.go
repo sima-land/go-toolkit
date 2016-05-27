@@ -14,7 +14,7 @@ func TestClientIP(t *testing.T) {
 	req.RemoteAddr = "192.168.1.1:8000"
 	assert.Equal(t, "192.168.1.1", ClientIP(req))
 
-	req.Header.Add("X-Forwarded-For", "192.168.1.2")
+	req.Header.Add("X-Forwarded-For", "zzz, 10.10.10.1, 192.168.1.2")
 	assert.Equal(t, "192.168.1.2", ClientIP(req))
 
 	req.Header.Add("X-Real-IP", "192.168.1.3")
