@@ -3,7 +3,8 @@
 Set of frequently used functions:
 
 - ClientIP - detects client IP using X-Forwarded-For and X-Real-IP headers along with client address
-
+- ClientID - assign to client randomly generated unique ID
+- Package geoip - Geo IP database helper
 
 ## Install
 
