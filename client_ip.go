@@ -1,28 +1,35 @@
 package toolkit
 
 import (
+	"net"
 	"net/http"
 	"strings"
 )
 
+const defaultHost = "127.0.0.1"
+
 // ClientIP returns client's IP.
 // If IP can not be detected function returns 127.0.0.1
 func ClientIP(req *http.Request) string {
-	ip := req.Header.Get("X-Real-IP")
-	if ip == "" {
-		ip = req.Header.Get("X-Forwarded-For")
-		if ip == "" {
-			ip = req.RemoteAddr
+	ips := req.Header.Get("X-Real-IP")
+	if ips == "" {
+		ips = req.Header.Get("X-Forwarded-For")
+		if ips == "" {
+			ips = req.RemoteAddr
 		}
 	}
-	if comma := strings.LastIndex(ip, ","); comma != -1 {
-		ip = strings.Trim(ip[comma+1:], " ")
+
+	ipList := strings.Split(ips, ", ")
+
+	ip := net.ParseIP(ipList[len(ipList)-1])
+	if ip == nil {
+		host, _, err := net.SplitHostPort(ipList[len(ipList)-1])
+		if err != nil {
+			return defaultHost
+		}
+
+		return host
 	}
-	if colon := strings.LastIndex(ip, ":"); colon != -1 {
-		ip = ip[:colon]
-	}
-	if ip == "" {
-		ip = "127.0.0.1"
-	}
-	return ip
+
+	return ip.String()
 }
